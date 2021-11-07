@@ -27,8 +27,9 @@ public class InventoryChecker extends BukkitRunnable {
     public void run(){
         Configuration config = IllegalPatch.config;
         List<Integer> toRemove = new ArrayList<>(); //Removal should be sync
-        List<String> IllegalsNonOp = config.getStringList("illegals.non-operator");
-        List<String> IllegalsNormal = config.getStringList("illegals.all");
+        List<String> StringIllegalsNonOp = config.getStringList("illegals.non-operator");
+        List<String> StringIllegalsNormal = config.getStringList("illegals.all");
+
 
         for(Player player : Bukkit.getOnlinePlayers()) {
 

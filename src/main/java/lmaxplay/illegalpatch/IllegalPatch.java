@@ -24,7 +24,7 @@ public final class IllegalPatch extends JavaPlugin {
         Server server = Bukkit.getServer();
         PluginManager manager = Bukkit.getPluginManager();
         BukkitScheduler scheduler = Bukkit.getScheduler();
-        new InventoryChecker().runTaskTimer(this, 0L, 1L);
+        new InventoryChecker().runTaskTimerAsynchronously(this, 0L, 1L);
     }
 
     @Override
