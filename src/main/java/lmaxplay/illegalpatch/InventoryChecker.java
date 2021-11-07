@@ -33,7 +33,10 @@ public class InventoryChecker extends BukkitRunnable {
         List<Material> IllegalsNonOp = new ArrayList<>();
         for(String str : StringIllegalsNonOp) {
             try {
-                IllegalsNonOp.add(Material.getMaterial(str));
+                Material material = Material.matchMaterial(str);
+                if(material != null) {
+                    IllegalsNonOp.add(material);
+                }
             } catch (Exception exception) {
                 Bukkit.getLogger().warning("Unable to parse illegals.non-operator");
             }
@@ -41,7 +44,7 @@ public class InventoryChecker extends BukkitRunnable {
         List<Material> IllegalsNormal = new ArrayList<>();
         for(String str : StringIllegalsNormal) {
             try {
-                Material material = Material.getMaterial(str);
+                Material material = Material.matchMaterial(str);
                 if(material != null) {
                     IllegalsNormal.add(material);
                 }
