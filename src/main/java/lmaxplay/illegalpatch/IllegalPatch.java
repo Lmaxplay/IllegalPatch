@@ -14,9 +14,12 @@ import lmaxplay.illegalpatch.InventoryChecker;
 
 public final class IllegalPatch extends JavaPlugin {
     public static Configuration config;
+    public static JavaPlugin instance;
     @Override
     public void onEnable() {
         // Plugin startup logic
+        instance = this;
+        saveDefaultConfig();
         config = this.getConfig();
         Server server = Bukkit.getServer();
         PluginManager manager = Bukkit.getPluginManager();
@@ -28,4 +31,5 @@ public final class IllegalPatch extends JavaPlugin {
     public void onDisable() {
         // Plugin shutdown logic
     }
+
 }

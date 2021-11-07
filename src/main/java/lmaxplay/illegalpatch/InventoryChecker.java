@@ -19,15 +19,32 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.configuration.Configuration;
 
 import java.io.ObjectInputFilter;
-import java.util.Collection;
+import java.util.*;
 
 
 public class InventoryChecker extends BukkitRunnable {
     @Override
     public void run(){
         Configuration config = IllegalPatch.config;
+        List<Integer> toRemove = new ArrayList<>(); //Removal should be sync
+        List<String> IllegalsNonOp = config.getStringList("illegals.non-operator");
+        List<String> IllegalsNormal = config.getStringList("illegals.all");
+
         for(Player player : Bukkit.getOnlinePlayers()) {
+
             Inventory playerInventory = player.getInventory();
+
+            for (int i = 0; i < playerInventory.getContents().length; i++) {
+                ItemStack content = playerInventory.getContents()[i];
+
+                if (content.getType() == Material.BEDROCK)
+                    toRemove.add(i);
+            }
+            Bukkit.getScheduler().runTask(IllegalPatch.instance, () ->
+            {
+                for(Integer content : toRemove)
+                    playerInventory.setItem(content, null);
+            });
         }
     }
 }
