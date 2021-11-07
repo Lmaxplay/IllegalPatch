@@ -41,7 +41,10 @@ public class InventoryChecker extends BukkitRunnable {
         List<Material> IllegalsNormal = new ArrayList<>();
         for(String str : StringIllegalsNormal) {
             try {
-                IllegalsNormal.add(Material.getMaterial(str));
+                Material material = Material.getMaterial(str);
+                if(material != null) {
+                    IllegalsNormal.add(material);
+                }
             } catch (Exception exception) {
                 Bukkit.getLogger().warning("Unable to parse illegals.all");
             }
