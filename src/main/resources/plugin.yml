@@ -3,5 +3,5 @@ version: '${version}'
 main: lmaxplay.illegalpatch.IllegalPatch
 api-version: 1.17
 prefix: IllegalPatch
-authors: [ Lmaxplay ]
+authors: [ Lmaxplay, Tvhee ]
 description: Plugin to fix illegals
