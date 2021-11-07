@@ -1,0 +1,7 @@
+name: IllegalPatch
+version: '${version}'
+main: lmaxplay.illegalpatch.IllegalPatch
+api-version: 1.17
+prefix: IllegalPatch
+authors: [ Lmaxplay ]
+description: Plugin to fix illegals
