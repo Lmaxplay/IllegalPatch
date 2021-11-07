@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryEvent;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.*;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.*;
@@ -65,6 +66,7 @@ public class InventoryChecker extends BukkitRunnable {
                 if(content.getAmount() >= content.getType().getMaxStackSize()) {
                     content.setAmount(content.getType().getMaxStackSize());
                 }
+
                 if (IllegalsNormal.contains(content.getType())) toRemove.add(i);
                 else if (IllegalsNonOp.contains(content.getType()) && !player.isOp()) toRemove.add(i);
             }
