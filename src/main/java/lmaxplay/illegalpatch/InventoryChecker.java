@@ -62,6 +62,9 @@ public class InventoryChecker extends BukkitRunnable {
                     continue;
                 }
                 ItemStack content = playerInventory.getContents()[i];
+                if(content.getAmount() >= content.getType().getMaxStackSize()) {
+                    content.setAmount(content.getType().getMaxStackSize());
+                }
                 if (IllegalsNormal.contains(content.getType())) toRemove.add(i);
                 else if (IllegalsNonOp.contains(content.getType()) && !player.isOp()) toRemove.add(i);
             }
