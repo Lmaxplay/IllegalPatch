@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 import lmaxplay.illegalpatch.InventoryChecker;
 
 public final class IllegalPatch extends JavaPlugin {
-    public Configuration config;
+    public static Configuration config;
     @Override
     public void onEnable() {
         // Plugin startup logic
