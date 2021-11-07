@@ -5,6 +5,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.Server;
 import org.bukkit.plugin.PluginManager;
 import lmaxplay.illegalpatch.Events;
+import org.bukkit.plugin.PluginLogger;
+import java.util.logging.Logger;
 
 public final class IllegalPatch extends JavaPlugin {
 
@@ -13,6 +15,7 @@ public final class IllegalPatch extends JavaPlugin {
         // Plugin startup logic
         Server server = Bukkit.getServer();
         PluginManager manager = Bukkit.getPluginManager();
+        Logger logger = Bukkit.getLogger();
         manager.registerEvents(new Events(), this);
     }
 
