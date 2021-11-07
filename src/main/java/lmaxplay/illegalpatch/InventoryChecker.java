@@ -20,6 +20,7 @@ import org.bukkit.configuration.Configuration;
 
 import java.io.ObjectInputFilter;
 import java.util.*;
+import java.util.logging.Logger;
 
 
 public class InventoryChecker extends BukkitRunnable {
@@ -29,7 +30,22 @@ public class InventoryChecker extends BukkitRunnable {
         List<Integer> toRemove = new ArrayList<>(); //Removal should be sync
         List<String> StringIllegalsNonOp = config.getStringList("illegals.non-operator");
         List<String> StringIllegalsNormal = config.getStringList("illegals.all");
-
+        List<Material> IllegalsNonOp = new ArrayList<>();
+        for(String str : StringIllegalsNonOp) {
+            try {
+                IllegalsNonOp.add(Material.getMaterial(str));
+            } catch (Exception exception) {
+                Bukkit.getLogger().warning("Unable to parse illegals.non-operator");
+            }
+        }
+        List<Material> IllegalsNormal = new ArrayList<>();
+        for(String str : StringIllegalsNormal) {
+            try {
+                IllegalsNormal.add(Material.getMaterial(str));
+            } catch (Exception exception) {
+                Bukkit.getLogger().warning("Unable to parse illegals.all");
+            }
+        }
 
         for(Player player : Bukkit.getOnlinePlayers()) {
 
@@ -37,9 +53,8 @@ public class InventoryChecker extends BukkitRunnable {
 
             for (int i = 0; i < playerInventory.getContents().length; i++) {
                 ItemStack content = playerInventory.getContents()[i];
-
-                if (content.getType() == Material.BEDROCK)
-                    toRemove.add(i);
+                if (IllegalsNormal.contains(content.getType())) toRemove.add(i);
+                else if (IllegalsNonOp.contains(content.getType()) && !player.isOp()) toRemove.add(i);
             }
             Bukkit.getScheduler().runTask(IllegalPatch.instance, () ->
             {
