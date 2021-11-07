@@ -1,5 +1,6 @@
 package lmaxplay.illegalpatch;
 
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -13,6 +14,7 @@ import org.bukkit.inventory.*;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.configuration.Configuration;
 
 import java.util.Collection;
 
@@ -22,7 +24,6 @@ public class InventoryChecker extends BukkitRunnable {
     public void run(){
         for(Player player : Bukkit.getOnlinePlayers()) {
             Inventory playerInventory = player.getInventory();
-            playerInventory.remove(Material.BEDROCK);
         }
     }
 }
