@@ -1,0 +1,19 @@
+illegalpatch.bypasscheck.all:
+  description: Bypasses all checks
+  default: false
+  children:
+    illegalpatch.bypasscheck.stacksize: true
+    illegalpatch.bypasscheck.enchantments: true
+    illegalpatch.bypasscheck.items: true
+
+illegalpatch.bypasscheck.stacksize:
+  description: Bypasses check for stack size
+  default: false
+
+illegalpatch.bypasscheck.enchantments:
+  description: Bypasses check for enchantments
+  default: false
+
+illegalpatch.bypasscheck.items:
+  description: Bypasses check for items
+  default: false

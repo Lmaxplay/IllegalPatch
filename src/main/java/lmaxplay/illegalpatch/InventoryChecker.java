@@ -4,6 +4,7 @@ import lmaxplay.illegalpatch.IllegalPatch;
 
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -63,12 +64,24 @@ public class InventoryChecker extends BukkitRunnable {
                     continue;
                 }
                 ItemStack content = playerInventory.getContents()[i];
-                if(content.getAmount() >= content.getType().getMaxStackSize()) {
-                    content.setAmount(content.getType().getMaxStackSize());
+                if(!player.hasPermission("illegalpatch.bypasscheck.stacksize")) {
+                    if (content.getAmount() >= content.getType().getMaxStackSize()) {
+                        content.setAmount(content.getType().getMaxStackSize());
+                    }
+                }
+                if(!player.hasPermission("illegalpatch.bypasscheck.enchantments")) {
+                    for (Map.Entry<Enchantment, Integer> entry : content.getEnchantments().entrySet()) {
+                        if (entry.getKey().getMaxLevel() >= entry.getValue()) {
+                            content.removeEnchantment(entry.getKey());
+                            content.addEnchantment(entry.getKey(), entry.getKey().getMaxLevel());
+                        }
+                    }
                 }
 
-                if (IllegalsNormal.contains(content.getType())) toRemove.add(i);
-                else if (IllegalsNonOp.contains(content.getType()) && !player.isOp()) toRemove.add(i);
+                if(!player.hasPermission("illegalpatch.bypasscheck.items")) {
+                    if (IllegalsNormal.contains(content.getType())) toRemove.add(i);
+                    else if (IllegalsNonOp.contains(content.getType()) && !player.isOp()) toRemove.add(i);
+                }
             }
             Bukkit.getScheduler().runTask(IllegalPatch.instance, () ->
             {
