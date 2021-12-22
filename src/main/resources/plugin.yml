@@ -5,3 +5,4 @@ api-version: 1.17
 prefix: IllegalPatch
 authors: [ Lmaxplay, Tvhee ]
 description: Plugin to fix illegals
+depend: [ ProtocolLib ]

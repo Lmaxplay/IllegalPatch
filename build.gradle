@@ -11,6 +11,7 @@ repositories {
         name = 'papermc-repo'
         url = 'https://papermc.io/repo/repository/maven-public/'
     }
+    maven { url "https://repo.dmulloy2.net/repository/public/" }
     maven {
         name = 'sonatype'
         url = 'https://oss.sonatype.org/content/groups/public/'
@@ -19,9 +20,10 @@ repositories {
 
 dependencies {
     compileOnly 'io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT'
+    compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.7.0"
 }
 
-def targetJavaVersion = 16
+def targetJavaVersion = 17
 java {
     def javaVersion = JavaVersion.toVersion(targetJavaVersion)
     sourceCompatibility = javaVersion
@@ -33,7 +35,7 @@ java {
 
 tasks.withType(JavaCompile).configureEach {
     if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
-        options.release = targetJavaVersion
+        options.release.set(targetJavaVersion)
     }
 }
 

@@ -2,6 +2,7 @@ package lmaxplay.illegalpatch;
 
 import lmaxplay.illegalpatch.IllegalPatch;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -16,16 +17,20 @@ import org.bukkit.material.*;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.*;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.inventory.InventoryView;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.configuration.Configuration;
+import org.bukkit.inventory.meta.*;
+
+import com.comphenix.protocol.utility.*;
+import com.comphenix.protocol.*;
+import com.comphenix.protocol.wrappers.nbt.*;
 
 import java.io.ObjectInputFilter;
 import java.util.*;
 import java.util.logging.Logger;
 
-
 public class InventoryChecker extends BukkitRunnable {
+    //@SuppressWarnings("deprecation")
     @Override
     public void run(){
         Configuration config = IllegalPatch.config;
@@ -40,7 +45,7 @@ public class InventoryChecker extends BukkitRunnable {
                     IllegalsNonOp.add(material);
                 }
             } catch (Exception exception) {
-                Bukkit.getLogger().warning("Unable to parse illegals.non-operator");
+                Bukkit.getLogger().warning("Unable to parse config illegals.non-operator");
             }
         }
         List<Material> IllegalsNormal = new ArrayList<>();
@@ -51,7 +56,7 @@ public class InventoryChecker extends BukkitRunnable {
                     IllegalsNormal.add(material);
                 }
             } catch (Exception exception) {
-                Bukkit.getLogger().warning("Unable to parse illegals.all");
+                Bukkit.getLogger().warning("Unable to parse config illegals.all");
             }
         }
 
@@ -69,6 +74,7 @@ public class InventoryChecker extends BukkitRunnable {
                         content.setAmount(content.getType().getMaxStackSize());
                     }
                 }
+
                 if(!player.hasPermission("illegalpatch.bypasscheck.enchantments")) {
                     for (Map.Entry<Enchantment, Integer> entry : content.getEnchantments().entrySet()) {
                         if (entry.getKey().getMaxLevel() >= entry.getValue()) {
@@ -81,6 +87,10 @@ public class InventoryChecker extends BukkitRunnable {
                 if(!player.hasPermission("illegalpatch.bypasscheck.items")) {
                     if (IllegalsNormal.contains(content.getType())) toRemove.add(i);
                     else if (IllegalsNonOp.contains(content.getType()) && !player.isOp()) toRemove.add(i);
+                }
+
+                if(content.getAmount() >= 128 || content.getAmount() <= -1) {
+                    player.kick(Component.text("Stack size invalid, terminating client"));
                 }
             }
             Bukkit.getScheduler().runTask(IllegalPatch.instance, () ->
